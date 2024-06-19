@@ -1,0 +1,171 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.charactersDetailsContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 42px;
+    padding: 136px 210px 36px 210px;
+
+    @media (max-width: 1439px) {
+        padding: 150px 96px 61px 96px;
+    }
+
+    @media (max-width: 768px) {
+        padding: 150px 24px 32px 24px;
+    }
+}
+
+.backRouterContainer {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    top: 102px;
+    left: 210px;
+    cursor: pointer;
+
+    @media (max-width: 1439px) {
+        top: 84px;
+        left: 96px;
+    }
+
+    @media (max-width: 768px) {
+        top: 84px;
+        left: 24px;
+    }
+}
+
+.characterImage {
+    @media (max-width: 768px) {
+        width: 146px;
+        height: 148px;
+    }
+}
+
+.topContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+}
+
+.characterNameText {
+    font-family: $font-roboto;
+    font-size: 48px;
+    font-weight: 400;
+    color: #081F32;
+
+    @media (max-width: 768px) {
+        font-size: 32px;
+    }
+}
+
+.botContainer {
+    display: flex;
+    gap: 20px;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        gap: 52px;
+    }
+}
+
+.botLeftContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+}
+
+.botLeftContainerTitle {
+    font-family: $font-roboto;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.15px;
+}
+
+.botLeftSubContainer {
+    display: flex;
+    flex-direction: column;
+    padding-left: 16px;
+}
+
+.leftTextContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 344px 12px 0;
+    border-bottom: solid 1px rgba($color: #212121, $alpha: 0.08);
+    position: relative;
+
+    @media (max-width: 768px) {
+        padding-right: 90px;
+    }
+}
+
+.subTitle {
+    font-family: $font-roboto;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: 0.15px;
+    color: #081F32;
+}
+
+.subFeature {
+    font-family: $font-roboto;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.25px;
+    color: #6E798C;
+}
+
+.arrowRight {
+    position: absolute;
+    right: 16px;
+    top: 20px;
+}
+
+.botRightContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+}
+
+.botRightContainerTitle {
+    font-family: $font-roboto;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24px;
+    letter-spacing: 0.15px;
+}
+
+.botRightSubContainer {
+    display: flex;
+    flex-direction: column;
+    padding-left: 16px;
+}
+
+.rightTextContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 344px 16px 0;
+    border-bottom: solid 1px rgba($color: #212121, $alpha: 0.08);
+    position: relative;
+
+    @media (max-width: 768px) {
+        padding-right: 110px;
+    }
+}
+
+.subDate {
+    font-family: $font-roboto;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 16px;
+    letter-spacing: 1.5px;
+    color: #8E8E93;
+}

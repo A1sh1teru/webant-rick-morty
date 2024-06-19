@@ -1,0 +1,41 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.episodesFilterContainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 86px 210px 61px 210px;
+
+    @media (max-width: 1439px) {
+        padding: 86px 96px 61px 96px;
+    }
+
+    @media (max-width: 768px) {
+        padding: 92px 24px 32px 24px;
+    }
+}
+
+.episodesImage {
+    @media (max-width: 768px) {
+        width: 174.16px;
+        height: 136px;
+    }
+}
+
+.filtersContainer {
+    display: flex;
+    justify-content: center;
+    padding-top: 16px;
+}
+
+.filterContainer1 {
+    @include filter_style4;
+    @media (max-width: 768px) {
+        width: 312px;
+    }
+}
+
+.input1 {
+    width: 436px;
+}

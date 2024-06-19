@@ -1,0 +1,26 @@
+@import '../../styles/variables.scss';
+@import '../../styles/mixins.scss';
+
+.footerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: -2px 0px 8px 2px rgba(0,0,0,0.1);
+}
+
+.footerText {
+    padding: 20px 470px;
+    @include header_title;
+
+    @media (max-width: 1439px) {
+        padding: 20px 96px;
+    }
+    @media (max-width: 1024px) {
+        padding: 20px 24px;
+    }
+
+    @media (max-width: 768px) {
+        padding: 8px 24px;
+        text-align: center;
+    }
+}

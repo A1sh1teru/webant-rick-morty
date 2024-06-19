@@ -1,0 +1,154 @@
+import { useState } from 'react';
+import styles from './characters-filter-section.module.scss';
+import Image from 'next/image';
+
+function Modal({ isOpen, onClose, children }) {
+    if (!isOpen) return null;
+    return (
+        <div className={styles.modalOverlay}>
+            <div className={styles.modalContent}>
+                <button onClick={onClose} className={styles.closeButton}>Close</button>
+                {children}
+            </div>
+        </div>
+    );
+}
+
+export default function CharactersFilterSection() {
+    const [isModalOpen, setModalOpen] = useState(false);
+
+    const openModal = () => setModalOpen(true);
+    const closeModal = () => setModalOpen(false);
+
+    return (
+        <div className={styles.charactersFilterContainer}>
+            <Image
+                src='/img/characters-image.svg'
+                width={600}
+                height={200}
+                alt='Rick and Morty'
+                className={styles.charactersImage}
+            />
+            <div className={styles.filtersContainer}>
+                <div className={styles.filterContainer1}>
+                    <Image
+                        src='/icons/search.svg'
+                        width={24}
+                        height={24}
+                        alt='search'
+                    />
+                    <input type="search" placeholder='Filter by name...' className={styles.input1} />
+                </div>
+                <div className={styles.filterContainer2}>
+                    <span className={styles.filter2Text}>Species</span>
+                    <Image
+                        src='/icons/arrow-drop-down.svg'
+                        width={24}
+                        height={24}
+                    />
+                </div>
+                <div className={styles.filterContainer2}>
+                    <span className={styles.filter2Text}>Gender</span>
+                    <Image
+                        src='/icons/arrow-drop-down.svg'
+                        width={24}
+                        height={24}
+                    />
+                </div>
+                <div className={styles.filterContainer2}>
+                    <span className={styles.filter2Text}>Status</span>
+                    <Image
+                        src='/icons/arrow-drop-down.svg'
+                        width={24}
+                        height={24}
+                    />
+                </div>
+                <div className={styles.filterContainer3} onClick={openModal}>
+                    <Image
+                        src='/icons/filter.svg'
+                        width={24}
+                        height={24}
+                        alt='search'
+                    />
+                    <span className={styles.filterContainer3Text}>ADVANCED FILTERS</span>
+                </div>
+            </div>
+            <Modal isOpen={isModalOpen} onClose={closeModal}>
+                <div className={styles.modalFiltersContainer}>
+                    <div className={styles.filterContainer2}>
+                        <span className={styles.filter2Text}>Species</span>
+                        <Image
+                            src='/icons/arrow-drop-down.svg'
+                            width={24}
+                            height={24}
+                        />
+                    </div>
+                    <div className={styles.filterContainer2}>
+                        <span className={styles.filter2Text}>Gender</span>
+                        <Image
+                            src='/icons/arrow-drop-down.svg'
+                            width={24}
+                            height={24}
+                        />
+                    </div>
+                    <div className={styles.filterContainer2}>
+                        <span className={styles.filter2Text}>Status</span>
+                        <Image
+                            src='/icons/arrow-drop-down.svg'
+                            width={24}
+                            height={24}
+                        />
+                    </div>
+                </div>
+            </Modal>
+        </div>
+    );
+}
+
+
+
+
+
+
+
+
+// Existing styles...
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContent {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.modalFiltersContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+// Additional styles for responsiveness can be added here...
