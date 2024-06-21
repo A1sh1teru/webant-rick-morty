@@ -13,6 +13,10 @@
     gap: 1px;
     cursor: pointer;
     min-height: 184px;
+
+    &:hover {
+        opacity: 0.7;
+    }
 }
 
 .cardTitle {
