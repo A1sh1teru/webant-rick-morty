@@ -3,10 +3,51 @@
 import styles from './episodes-details-section.module.scss'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
+import { useState, useEffect } from 'react'
+import { getEpisodeById, getCharactersByEpisode } from '../../app/api/route';
+import CharacterCard from '../character-card'
 
-export default function EpisodesDetailsSection() {
+export default function EpisodesDetailsSection({ id }) {
 
+    const [episode, setEpisode] = useState(null);
+    const [characters, setCharacters] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [loading, setLoading] = useState(false);
     const router = useRouter()
+
+    useEffect(() => {
+        if (id) {
+            getEpisodeById(id).then(data => {
+                setEpisode(data);
+                return getCharactersByEpisode(data.characters.slice(0, 20));
+            }).then(charactersData => {
+                setCharacters(charactersData);
+            }).catch(error => {
+                console.error('Error fetching episode or characters data:', error);
+            });
+        }
+    }, [id]);
+
+    if (!episode) {
+        return <div>Loading...</div>;
+    }
+
+    const loadMoreCharacters = async () => {
+        if (episode) {
+            setLoading(true);
+            const nextPageCharacters = episode.characters.slice(currentPage * 20, (currentPage + 1) * 20);
+            if (nextPageCharacters.length > 0) {
+                try {
+                    const newCharacters = await getCharactersByEpisode(nextPageCharacters);
+                    setCharacters(prevCharacters => [...prevCharacters, ...newCharacters]);
+                    setCurrentPage(prevPage => prevPage + 1);
+                } catch (error) {
+                    console.error('Error fetching more characters:', error);
+                }
+            }
+            setLoading(false);
+        }
+    };
 
     return(
 
@@ -33,7 +74,7 @@ export default function EpisodesDetailsSection() {
 
                 <span className={styles.topTitle}>
 
-                    Pilot
+                    {episode.name}
 
                 </span>
 
@@ -49,7 +90,7 @@ export default function EpisodesDetailsSection() {
 
                         <span className={styles.leftFeature}>
 
-                            SE01E01
+                            {episode.episode}
 
                         </span>
 
@@ -65,7 +106,7 @@ export default function EpisodesDetailsSection() {
 
                         <span className={styles.rightFeature}>
 
-                            December 2, 2013
+                            {episode.air_date}
 
                         </span>
 
@@ -85,375 +126,29 @@ export default function EpisodesDetailsSection() {
 
                 <div className={styles.cardsContainer}>
 
-                    <div onClick={() => router.push('/character')} className={styles.cardContainer}>
+                    {characters.map(character => (
 
-                        <div className={styles.imageContainer}>
+                        <div onClick={() => router.push(`/character/${character.id}`)} className={styles.cardContainer}>
 
-                            <Image
-                                src='/img/cardImage.svg'
-                                fill={true}
-                                className={styles.cardImage}
-                            />
+                            <CharacterCard key={character.id} character={character} />
 
                         </div>
 
-                        <div className={styles.cardInfoContainer}>
-
-                            <span className={styles.cardTitle}>
-
-                                Rick Sanchez
-
-                            </span>
-                            
-                            <span className={styles.cardDescription}>
-
-                                Human
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <div className={styles.cardContainer}>
-
-                        <div className={styles.imageContainer}>
-
-                            <Image
-                                src='/img/cardImage.svg'
-                                fill={true}
-                                className={styles.cardImage}
-                            />
-
-                        </div>
-
-                        <div className={styles.cardInfoContainer}>
-
-                            <span className={styles.cardTitle}>
-
-                                Rick Sanchez
-
-                            </span>
-                            
-                            <span className={styles.cardDescription}>
-
-                                Human
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <div className={styles.cardContainer}>
-
-                        <div className={styles.imageContainer}>
-
-                            <Image
-                                src='/img/cardImage.svg'
-                                fill={true}
-                                className={styles.cardImage}
-                            />
-
-                        </div>
-
-                        <div className={styles.cardInfoContainer}>
-
-                            <span className={styles.cardTitle}>
-
-                                Rick Sanchez
-
-                            </span>
-                            
-                            <span className={styles.cardDescription}>
-
-                                Human
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <div className={styles.cardContainer}>
-
-                        <div className={styles.imageContainer}>
-
-                            <Image
-                                src='/img/cardImage.svg'
-                                fill={true}
-                                className={styles.cardImage}
-                            />
-
-                        </div>
-
-                        <div className={styles.cardInfoContainer}>
-
-                            <span className={styles.cardTitle}>
-
-                                Rick Sanchez
-
-                            </span>
-                            
-                            <span className={styles.cardDescription}>
-
-                                Human
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <div className={styles.cardContainer}>
-
-                        <div className={styles.imageContainer}>
-
-                            <Image
-                                src='/img/cardImage.svg'
-                                fill={true}
-                                className={styles.cardImage}
-                            />
-
-                        </div>
-
-                        <div className={styles.cardInfoContainer}>
-
-                            <span className={styles.cardTitle}>
-
-                                Rick Sanchez
-
-                            </span>
-                            
-                            <span className={styles.cardDescription}>
-
-                                Human
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <div className={styles.cardContainer}>
-
-                        <div className={styles.imageContainer}>
-
-                            <Image
-                                src='/img/cardImage.svg'
-                                fill={true}
-                                className={styles.cardImage}
-                            />
-
-                        </div>
-
-                        <div className={styles.cardInfoContainer}>
-
-                            <span className={styles.cardTitle}>
-
-                                Rick Sanchez
-
-                            </span>
-                            
-                            <span className={styles.cardDescription}>
-
-                                Human
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <div className={styles.cardContainer}>
-
-                        <div className={styles.imageContainer}>
-
-                            <Image
-                                src='/img/cardImage.svg'
-                                fill={true}
-                                className={styles.cardImage}
-                            />
-
-                        </div>
-
-                        <div className={styles.cardInfoContainer}>
-
-                            <span className={styles.cardTitle}>
-
-                                Rick Sanchez
-
-                            </span>
-                            
-                            <span className={styles.cardDescription}>
-
-                                Human
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <div className={styles.cardContainer}>
-
-                        <div className={styles.imageContainer}>
-
-                            <Image
-                                src='/img/cardImage.svg'
-                                fill={true}
-                                className={styles.cardImage}
-                            />
-
-                        </div>
-
-                        <div className={styles.cardInfoContainer}>
-
-                            <span className={styles.cardTitle}>
-
-                                Rick Sanchez
-
-                            </span>
-                            
-                            <span className={styles.cardDescription}>
-
-                                Human
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <div className={styles.cardContainer}>
-
-                        <div className={styles.imageContainer}>
-
-                            <Image
-                                src='/img/cardImage.svg'
-                                fill={true}
-                                className={styles.cardImage}
-                            />
-
-                        </div>
-
-                        <div className={styles.cardInfoContainer}>
-
-                            <span className={styles.cardTitle}>
-
-                                Rick Sanchez
-
-                            </span>
-                            
-                            <span className={styles.cardDescription}>
-
-                                Human
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <div className={styles.cardContainer}>
-
-                        <div className={styles.imageContainer}>
-
-                            <Image
-                                src='/img/cardImage.svg'
-                                fill={true}
-                                className={styles.cardImage}
-                            />
-
-                        </div>
-
-                        <div className={styles.cardInfoContainer}>
-
-                            <span className={styles.cardTitle}>
-
-                                Rick Sanchez
-
-                            </span>
-                            
-                            <span className={styles.cardDescription}>
-
-                                Human
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <div className={styles.cardContainer}>
-
-                        <div className={styles.imageContainer}>
-
-                            <Image
-                                src='/img/cardImage.svg'
-                                fill={true}
-                                className={styles.cardImage}
-                            />
-
-                        </div>
-
-                        <div className={styles.cardInfoContainer}>
-
-                            <span className={styles.cardTitle}>
-
-                                Rick Sanchez
-
-                            </span>
-                            
-                            <span className={styles.cardDescription}>
-
-                                Human
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                    <div className={styles.cardContainer}>
-
-                        <div className={styles.imageContainer}>
-
-                            <Image
-                                src='/img/cardImage.svg'
-                                fill={true}
-                                className={styles.cardImage}
-                            />
-
-                        </div>
-
-                        <div className={styles.cardInfoContainer}>
-
-                            <span className={styles.cardTitle}>
-
-                                Rick Sanchez
-
-                            </span>
-                            
-                            <span className={styles.cardDescription}>
-
-                                Human
-
-                            </span>
-
-                        </div>
-
-                    </div>
+                    ))}
 
                 </div>
 
             </div>
 
-            <div className={styles.botBtn}>
+            {episode.characters.length > characters.length && (
 
-                LOAD MORE
+                <div className={styles.botBtn} onClick={loadMoreCharacters}>
 
-            </div>
+                    {loading ? 'Loading...' : 'LOAD MORE'}
+                    
+                </div>
+
+            )}
 
         </div>
 

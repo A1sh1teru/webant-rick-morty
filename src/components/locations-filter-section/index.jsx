@@ -2,7 +2,9 @@
 
 import styles from './locations-filter-section.module.scss'
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import axios from 'axios'
+import { useRouter } from 'next/navigation'
 
 function Filter({ isOpen, onClose, children }) {
     if (!isOpen) return null;
@@ -28,9 +30,49 @@ function Filter({ isOpen, onClose, children }) {
 export default function LocationsFilterSection() {
 
     const [isFilterOpen, setFilterOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [locations, setLocations] = useState([]);
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [filteredLocations, setFilteredLocations] = useState([]);
 
     const openFilter = () => setFilterOpen(true);
     const closeFilter = () => setFilterOpen(false);
+
+    const router = useRouter();
+
+    useEffect(() => {
+        const fetchLocations = async () => {
+            try {
+                const response = await axios.get('https://rickandmortyapi.com/api/location');
+                setLocations(response.data.results);
+            } catch (error) {
+                console.error('Error fetching characters:', error);
+            }
+        };
+
+        fetchLocations();
+    }, []);
+
+    const handleSearchChange = (e) => {
+        const query = e.target.value;
+        setSearchQuery(e.target.value);
+
+        if (query.length > 0) {
+            const filtered = locations.filter(location =>
+                location.name.toLowerCase().includes(query.toLowerCase())
+            );
+            setFilteredLocations(filtered);
+            setShowDropdown(true);
+        } else {
+            setShowDropdown(false);
+        }
+    };
+
+    const handleSelectLocation = (location) => {
+        setSearchQuery(location.name);
+        setShowDropdown(false);
+        router.push(`/locations/location/${location.id}`)
+    };
 
     return(
 
@@ -55,7 +97,27 @@ export default function LocationsFilterSection() {
                         alt='search'
                     />
 
-                    <input type="search" placeholder='Filter by name...' className={styles.input1} />
+                    <input 
+                        type="search" 
+                        placeholder='Filter by name...' 
+                        className={styles.input1}
+                        value={searchQuery}
+                        onChange={handleSearchChange} 
+                    />
+
+                    {showDropdown && (
+                        <div className={styles.dropdown}>
+                            {filteredLocations.map(location => (
+                                <div 
+                                    key={location.id} 
+                                    className={styles.dropdownItem}
+                                    onClick={() => handleSelectLocation(location)}
+                                >
+                                    {location.name}
+                                </div>
+                            ))}
+                        </div>
+                    )}
 
                 </div>
 

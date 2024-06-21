@@ -44,9 +44,33 @@
 
 .filterContainer1 {
     @include filter_style1;
+    position: relative;
 
     @media (max-width: 768px) {
         width: 312px;
+    }
+}
+
+.dropdown {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    max-height: 200px;
+    overflow-y: auto;
+
+    .dropdownItem {
+        padding: 10px;
+        cursor: pointer;
+
+        &:hover {
+            background-color: rgba($color: #2196F3, $alpha: 0.7);
+        }
     }
 }
 
@@ -141,3 +165,4 @@
     }
 
 }
+

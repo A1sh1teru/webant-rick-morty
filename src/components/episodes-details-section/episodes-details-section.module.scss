@@ -124,57 +124,21 @@
 .cardsContainer {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 1fr);
     grid-column-gap: 20px;
     grid-row-gap: 24px;
 
     @media (max-width: 1439px) {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(6, 1fr);
         grid-column-gap: 20px;
         grid-row-gap: 24px;
     }
 
     @media (max-width: 768px) {
         grid-template-columns: repeat(1, 1fr);
-        grid-template-rows: repeat(12, 1fr);
         grid-column-gap: 0px;
         grid-row-gap: 16px;
     }
-}
-
-.cardContainer {
-    display: flex;
-    flex-direction: column;
-    border-radius: 4px;
-    box-shadow: 0px 3px 5px 0px rgba(0,0,0,0.2);
-    cursor: pointer;
-}
-
-.imageContainer {
-    position: relative;
-    width: 240px;
-    height: 168px;
-}
-
-.cardImage {
-    object-fit: cover;
-}
-
-.cardInfoContainer {
-    display: flex;
-    flex-direction: column;
-    padding: 12px 16px;
-    gap: 1px;
-}
-
-.cardTitle {
-    @include card_title;
-}
-
-.cardDescription {
-    @include card_description;
 }
 
 .botBtn {
@@ -190,4 +154,10 @@
     font-family: $font-roboto;
     line-height: 16px;
     letter-spacing: 1.25px;
+    cursor: pointer;
+}
+
+.botBtn:hover {
+    opacity: 0.7;
+    transition: 0.3s;
 }

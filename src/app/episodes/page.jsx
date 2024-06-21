@@ -3,7 +3,7 @@ import Footer from '../../components/footer'
 import EpisodesCardsSection from '../../components/episodes-cards-section'
 import EpisodesFilterSection from '../../components/episodes-filter-section'
 
-export default function Episodes() {
+export default function EpisodesPage() {
 
     return(
 

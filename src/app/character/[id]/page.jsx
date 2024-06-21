@@ -1,8 +1,10 @@
 import Header from '../../../components/header'
-import Footer from '../../../components/footer'
-import EpisodesDetailsSection from '../../../components/episodes-details-section'
+import Footer from "../../../components/footer";
+import CharactersDetailsSection from "../../../components/characters-details-section";
 
-export default function Episode() {
+export default function CharacterPage({ params }) {
+
+    const { id } = params;
 
     return(
 
@@ -16,7 +18,7 @@ export default function Episode() {
 
             <main>
 
-                <EpisodesDetailsSection />
+                <CharactersDetailsSection id={id} />
 
             </main>
 
@@ -25,7 +27,7 @@ export default function Episode() {
                 <Footer />
 
             </footer>
-
+        
         </>
 
     )

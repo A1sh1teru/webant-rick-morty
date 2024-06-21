@@ -3,7 +3,7 @@ import Footer from "../../components/footer"
 import LocationsFilterSection from '../../components/locations-filter-section'
 import LocationsCardsSection from '../../components/locations-cards-section'
 
-export default function Locations() {
+export default function LocationsPage() {
 
     return(
 
