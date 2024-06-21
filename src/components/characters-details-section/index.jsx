@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import styles from './characters-details-section.module.scss';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { getCharacterById, getEpisodesByCharacter } from '../../app/api/route.jsx';
+import { getCharacterById, getEpisodesByCharacter } from '../../app/api/api.jsx';
 
 export default function CharactersDetailsSection({ id }) {
     const [character, setCharacter] = useState(null);

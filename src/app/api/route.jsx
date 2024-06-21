@@ -1,69 +1,28 @@
- 
-    import axios from 'axios';
+import { getCharacterById, getEpisodesByCharacter } from './api';
 
-    const API_URL1 = 'https://rickandmortyapi.com/api/character';
-    const API_URL2 = 'https://rickandmortyapi.com/api/location';
-    const API_URL3 = 'https://rickandmortyapi.com/api/episode';
+export async function GET(req) {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
+    const type = searchParams.get('type');
 
-    export const getCharacterById = async (id) => {
-        try {
-            const response = await axios.get(`${API_URL1}/${id}`);
-            return response.data;
-        } catch (error) {
-            console.error('Error fetching character data:', error);
-            throw error;
-        }
-    };
-
-    export const getLocationById = async (id) => {
-        try {
-            const response = await axios.get(`${API_URL2}/${id}`);
-            return response.data;
-        } catch (error) {
-            console.error('Error fetching location data:', error);
-            throw error;
-        }
+    if (!id || !type) {
+        return new Response(JSON.stringify({ error: 'ID and type are required' }), { status: 400 });
     }
 
-    export const getEpisodeById = async (id) => {
-        try {
-            const response = await axios.get(`${API_URL3}/${id}`);
-            return response.data;
-        } catch (error) {
-            console.error('Error fetching episode data:', error);
-            throw error;
+    try {
+        let data;
+        if (type === 'character') {
+            data = await getCharacterById(id);
+        } else if (type === 'episode') {
+            data = await getEpisodeById(id);
+        } else if (type === 'location') {
+            data = await getLocationById(id);
+        } else {
+            return new Response(JSON.stringify({ error: 'Invalid type' }), { status: 400 });
         }
+        
+        return new Response(JSON.stringify(data), { status: 200 });
+    } catch (error) {
+        return new Response(JSON.stringify({ error: error.message }), { status: 500 });
     }
-
-    export const getEpisodesByCharacter = async (episodeUrls) => {
-        try {
-            const episodePromises = episodeUrls.map(url => axios.get(url));
-            const episodes = await Promise.all(episodePromises);
-            return episodes.map(response => response.data);
-        } catch (error) {
-            console.error('Error fetching episodes data:', error);
-            throw error;
-        }
-    };
-
-    export const getCharactersByLocation = async (characterUrls) => {
-        try {
-            const characterPromises = characterUrls.map(url => axios.get(url));
-            const characters = await Promise.all(characterPromises);
-            return characters.map(response => response.data);
-        } catch (error) {
-            console.error('Error fetching characters data:', error);
-            throw error;
-        }
-    }
-
-    export const getCharactersByEpisode = async (characterUrls) => {
-        try {
-            const characterPromises = characterUrls.map(url => axios.get(url));
-            const characters = await Promise.all(characterPromises);
-            return characters.map(response => response.data);
-        } catch (error) {
-            console.error('Error fetching characters data:', error);
-            throw error;
-        }
-    }
+}

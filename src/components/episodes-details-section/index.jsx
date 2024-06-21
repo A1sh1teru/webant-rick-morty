@@ -4,7 +4,7 @@ import styles from './episodes-details-section.module.scss'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useState, useEffect } from 'react'
-import { getEpisodeById, getCharactersByEpisode } from '../../app/api/route';
+import { getEpisodeById, getCharactersByEpisode } from '../../app/api/api.jsx';
 import CharacterCard from '../character-card'
 
 export default function EpisodesDetailsSection({ id }) {

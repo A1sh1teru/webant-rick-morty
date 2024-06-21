@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import styles from './locations-details-section.module.scss'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { getLocationById, getCharactersByLocation } from '../../app/api/route';
+import { getLocationById, getCharactersByLocation } from '../../app/api/api.jsx';
 import CharacterCard from '../character-card'
 
 export default function LocationsDetailsSection({ id }) {
@@ -145,7 +145,7 @@ export default function LocationsDetailsSection({ id }) {
                 <div className={styles.botBtn} onClick={loadMoreCharacters}>
 
                     {loading ? 'Loading...' : 'LOAD MORE'}
-                    
+
                 </div>
             )}
 
